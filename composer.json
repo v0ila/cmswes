@@ -1,0 +1,5 @@
+{
+    "require": {
+        "wescms/wescms": "1.0.*"
+    }
+}
