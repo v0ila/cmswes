@@ -1,0 +1,1 @@
+<?php /* C:\xampp\htdocs\cms\extensions/system/views/tmpl/link.replace.razr */ ?><a class="js-editor-link {{class}}" href="{{link}}">{{{txt}}}{{#unless txt}}<?php echo __('Select Link') ?>{{/unless}} <span class="uk-icon-pencil"></span></a>

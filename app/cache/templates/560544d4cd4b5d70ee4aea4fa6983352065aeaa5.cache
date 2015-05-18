@@ -1,0 +1,139 @@
+<?php /* C:\xampp\htdocs\cms\themes/onover/templates/template.razr */ ?><!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link href="<?php echo($this->getDirective('url')->call(array('extension://system/theme/favicon.ico'))) ?>" rel="shortcut icon" type="image/x-icon">
+        <link href="<?php echo($this->getDirective('url')->call(array('extension://system/theme/apple_touch_icon.png'))) ?>" rel="apple-touch-icon-precomposed">
+        <?php $app['view.sections']->output('head') ?>
+        <link rel="stylesheet" href="themes/onover/css/theme.css">
+        <?php echo($this->getDirective('style')->call(array('theme', 'theme://onover/css/uikit.css'))) ?>
+        <?php echo($this->getDirective('script')->call(array('jquery'))) ?>
+        <?php echo($this->getDirective('script')->call(array('uikit'))) ?>
+    </head>
+    <body>  
+
+    <div class="ce-border">
+        <header class="cpe_header_pos">
+           	<div class="uk-navbar uk-container uk-container-center">
+           		<?php if($this->callFunction('hasSection', array('logo'))) :?>
+           			<a href="<?php echo($this->getDirective('url')->call(array())) ?>" class="uk-navbar-brand uk-hidden-small"><?php $app['view.sections']->output('logo', ['renderer' => 'blank']) ?></a>
+           	
+           		<?php endif ?>
+
+				<?php if($this->callFunction('hasSection', array('navbar'))) :?>
+               		<nav class="uk-navbar uk-hidden-small">
+                   		<?php $app['view.sections']->output('navbar', ['renderer' => 'navbar']) ?>
+               		</nav>
+
+               	<?php if($this->callFunction('hasSection', array('offcanvas'))) :?>
+               		<a href="#offcanvas" class="uk-navbar-toggle uk-visible-small" data-uk-offcanvas></a>
+               	<?php endif ?>
+
+               	<?php if($this->callFunction('hasSection', array('logo-small'))) :?>
+               		<div class="uk-navbar-content uk-navbar-center uk-visible-small">
+                   		<a href="<?php echo($this->getDirective('url')->call(array())) ?>" class="tm-brand"><?php $app['view.sections']->output('logo-small', ['renderer' => 'blank']) ?></a>
+               		</div>
+               	<?php endif ?>
+				<?php endif ?>
+           	</div>
+        </header>
+
+        <?php if($this->callFunction('hasSection', array('fullscreen'))) :?>
+            <div class="ce_fullscreen">
+              	<div class="ce_fullscreen_inner ">
+                   	<?php $app['view.sections']->output('fullscreen', ['renderer' => 'blank']) ?>
+                </div>
+            </div>
+        <?php endif ?>
+	
+		
+			<?php if($this->callFunction('hasSection', array('top-a'))) :?>
+            <div class="ce-mut-one">
+            <div class="uk-container uk-container-center">
+            	<div class="uk-grid">
+            		<div class="uk-width-1-1">
+                	<?php $app['view.sections']->output('top-a', ['renderer' => 'panel']) ?>
+                	</div>
+            	</div>
+            </div>
+            </div>
+            <?php endif ?>
+            <?php if($this->callFunction('hasSection', array('top-b'))) :?>
+            
+            <div class="uk-container uk-container-center">
+            	<div class="uk-grid">
+            		<div class="uk-width-1-1">
+                	<?php $app['view.sections']->output('top-b', ['renderer' => 'panel']) ?>
+                	</div>
+            	</div>
+            </div>
+            
+            <?php endif ?>
+            <?php if($this->callFunction('hasSection', array('top-c'))) :?>
+            <div class="ce-mut-two">
+            <div class="uk-container uk-container-center">
+                <div class="uk-grid">
+                    <div class="uk-width-1-1">
+                    <?php $app['view.sections']->output('top-c', ['renderer' => 'panel']) ?>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <?php endif ?>
+            <div class="uk-container uk-container-center uk-margin-bottom">
+            <div class="uk-grid" >
+            
+            	 <?php if($this->callFunction('hasSection', array('sidebar'))) :?>
+                    <div class="uk-width-3-4">
+                 <?php else :?>
+                 	<div class="uk-width-1-1">
+
+                 <?php endif ?>
+                 	<?php $app['view.sections']->output('messages') ?>
+                    <?php $app['view.sections']->output('content') ?>
+                </div>
+
+                <?php if($this->callFunction('hasSection', array('sidebar'))) :?>
+                <aside class="uk-width-1-4">
+                	
+                    <?php $app['view.sections']->output('sidebar', ['renderer' => 'panel']) ?>
+                    
+                </aside>
+                <?php endif ?>
+            </div>
+            </div>
+
+        	<?php if($this->callFunction('hasSection', array('bottom'))) :?>
+            <div class="ce-mut-one">
+            <div class="uk-container uk-container-center">
+            	<div class="uk-grid cpe_bottom">
+            		<div class="uk-width-1-1">
+                	<?php $app['view.sections']->output('bottom', ['renderer' => 'blank']) ?>
+                	</div>
+            	</div>
+            </div>
+            </div>
+            <?php endif ?>
+
+        <div class="cpe_afterwrap">
+        <?php if($this->callFunction('hasSection', array('footer'))) :?>
+        <div class="uk-container uk-container-center">
+            	<footer class="uk-grid uk-grid-divider" data-uk-grid-margin="">
+                	<?php $app['view.sections']->output('footer', ['renderer' => 'grid']) ?>
+            	</footer>
+        </div>
+        <?php endif ?>
+
+        
+        </div>
+        <?php if($this->callFunction('hasSection', array('offcanvas'))) :?>
+        	<div id="offcanvas" class="uk-offcanvas">
+            	<div class="uk-offcanvas-bar">
+                	<?php $app['view.sections']->output('offcanvas', ['renderer' => 'offcanvas']) ?>
+            	</div>
+        	</div>
+        <?php endif ?>
+        </div> 
+   
+    </body>
+</html>

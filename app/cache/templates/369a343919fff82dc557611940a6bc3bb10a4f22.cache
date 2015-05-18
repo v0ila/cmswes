@@ -1,0 +1,15 @@
+<?php /* C:\xampp\htdocs\cms\themes/onover/views/renderer/position.panel.razr */ extract(array (  'value' => NULL,  'widget' => NULL,  'options' => NULL,), EXTR_SKIP) ?><?php foreach($value as $widget) :?>
+<div class="uk-panel <?php echo $this->escape(( $this->getAttribute($this->getAttribute($this->getAttribute($widget, 'settings'), 'theme'), 'panel') ) ) ?><?php echo $this->escape(( $this->getAttribute($this->getAttribute($this->getAttribute($widget, 'settings'), 'theme'), 'alignment') ? ' uk-text-center' : '' ) ) ?>">
+
+    <?php if($this->getAttribute($this->getAttribute($this->getAttribute($this->getAttribute($widget, 'settings'), 'theme'), 'badge'), 'text')) :?>
+    <div class="<?php echo $this->escape(( $this->getAttribute($this->getAttribute($this->getAttribute($this->getAttribute($widget, 'settings'), 'theme'), 'badge'), 'type') ) ) ?>"><?php echo $this->escape(( $this->getAttribute($this->getAttribute($this->getAttribute($this->getAttribute($widget, 'settings'), 'theme'), 'badge'), 'text') ) ) ?></div>
+    <?php endif ?>
+
+    <?php if($this->getAttribute($widget, 'showTitle')) :?>
+    <h3 class="ce-title-panel"><?php echo $this->escape(( $this->getAttribute($widget, 'title') ) ) ?></h3>
+    <?php endif ?>
+
+    <?php echo($this->getAttribute($widget, 'render', array($options), 'method')) ?>
+    
+</div>
+<?php endforeach ?>

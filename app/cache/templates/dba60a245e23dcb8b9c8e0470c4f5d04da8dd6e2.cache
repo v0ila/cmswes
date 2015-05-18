@@ -1,0 +1,44 @@
+<?php /* C:\xampp\htdocs\cms\extensions/system/views/admin/menu/item.razr */ extract(array (  'root' => NULL,  'menuitem' => NULL,  'item' => NULL,  'menu' => NULL,), EXTR_SKIP) ?><?php if($this->getAttribute($root, 'depth') == 0) :?>
+<ul class="uk-nestable js-menu-items" data-uk-nestable>
+<?php endif ?>
+
+    <?php foreach($this->getAttribute($root, 'children') as $menuitem) :?>
+
+    <?php ($item = $this->getAttribute($menuitem, 'item')) ?>
+
+    <li class="uk-nestable-list-item" data-id="<?php echo $this->escape(( $this->getAttribute($item, 'id') ) ) ?>">
+
+        <div class="uk-nestable-item pk-table-fake">
+            <div class="pk-table-width-minimum"><div class="uk-nestable-handle"></div></div>
+            <div class="pk-table-width-minimum pk-padding-horizontal-remove"><div data-nestable-action="toggle"></div></div>
+            <div class="pk-table-width-minimum"><input class="js-select" type="checkbox" name="id[]" value="<?php echo $this->escape(( $this->getAttribute($item, 'id') ) ) ?>"></div>
+            <div class="pk-table-min-width-100">
+                <a href="<?php echo($this->getDirective('url')->call(array('@system/item/edit', ['id' => $this->getAttribute($item, 'id')]))) ?>"><?php echo $this->escape(( $this->getAttribute($item, 'name') ) ) ?></a>
+            </div>
+            <div class="pk-table-width-100 uk-text-center">
+                <a class="uk-icon-circle uk-text-<?php echo $this->escape(( $this->getAttribute($item, 'status') ? 'success' : 'danger' ) ) ?>" href="#" data-action="<?php echo($this->getDirective('url')->call(array('@system/item/status', ['menu' => $this->getAttribute($item, 'menuId'),'id' => $this->getAttribute($item, 'id'), 'status' => $this->getAttribute($item, 'status') ? '0' : '1']))) ?>" title="<?php echo $this->escape(( $this->getAttribute($item, 'statusText') ) ) ?>"></a>
+            </div>
+            <div class="pk-table-width-150 pk-table-max-width-150 uk-text-truncate">
+                <?php if($this->getAttribute($item, 'url') == '!divider') :?>
+                <?php echo __('Divider') ?>
+                <?php elseif($this->getAttribute($item, 'url') == '!header') :?>
+                <?php echo __('Menu Header') ?>
+                <?php else :?>
+                <a href="<?php echo($this->getDirective('url')->call(array($this->getAttribute($item, 'url')))) ?>" target="_blank"><?php echo $this->escape(( urldecode($this->callFunction('url', array($this->getAttribute($item, 'url'), [], 'base')))) ) ?></a>
+                <?php endif ?>
+            </div>
+        </div>
+
+        <?php if($this->getAttribute($menuitem, 'hasChildren', array(), 'method')) :?>
+        <ul class="uk-nestable-list">
+            <?php $_defined = array('extension://system/views/admin/menu/item.razr', ['menu' => $menu, 'root' => $menuitem]); echo($this->render($_defined[0], array_merge(get_defined_vars(), isset($_defined[1]) ? $_defined[1] : []))) ?>
+        </ul>
+        <?php endif ?>
+
+    </li>
+
+    <?php endforeach ?>
+
+<?php if($this->getAttribute($root, 'depth') == 0) :?>
+</ul>
+<?php endif ?>

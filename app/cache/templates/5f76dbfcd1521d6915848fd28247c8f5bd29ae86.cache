@@ -1,0 +1,66 @@
+<?php /* C:\xampp\htdocs\cms\extensions/page/views/admin/pages/edit.razr */ extract(array (  'page' => NULL,  'statuses' => NULL,  'roles' => NULL,  'role' => NULL,), EXTR_SKIP) ?><?php echo($this->getDirective('script')->call(array('pages-edit', 'extension://page/assets/js/edit.js', 'requirejs'))) ?>
+
+<form id="js-page" class="uk-form uk-form-stacked" action="<?php echo($this->getDirective('url')->call(array('@page/page/save'))) ?>" method="post">
+
+    <?php $app['view.sections']->start('toolbar', 'show') ?>
+        <button class="uk-button uk-button-primary" type="submit"><?php echo __('Save') ?> <i class="uk-icon-spinner uk-icon-spin js-spinner uk-margin-small-left uk-hidden"></i></button>
+        <a class="uk-button js-cancel" href="<?php echo($this->getDirective('url')->call(array('@page/page'))) ?>" data-label="<?php echo __('Close') ?>"><?php echo $this->escape(( $this->getAttribute($page, 'id') ? __('Close') : __('Cancel') ) ) ?></a>
+    <?php echo($app['view.sections']->end()) ?>
+
+    <div class="uk-grid uk-grid-divider" data-uk-grid-margin data-uk-grid-match>
+        <div class="uk-width-medium-3-4">
+
+            <div class="uk-form-row">
+                <input class="uk-width-1-1 uk-form-large" type="text" name="page[title]" value="<?php echo $this->escape(( $this->getAttribute($page, 'title') ) ) ?>" placeholder="<?php echo __('Enter Title') ?>" required>
+                <input type="hidden" name="id" value="<?php echo $this->escape(( $this->getAttribute($page, 'id') ?: 0 ) ) ?>">
+            </div>
+            <div class="uk-form-row">
+                <?php echo($this->getDirective('editor')->call(array('page[content]', $this->getAttribute($page, 'content'), ['id' => 'page-content', 'data-markdown' => $this->getAttribute($page, 'get', array('markdown', '0'), 'method')]))) ?>
+            </div>
+
+        </div>
+        <div class="uk-width-medium-1-4 pk-sidebar-right">
+
+            <div class="uk-panel uk-panel-divider">
+                <div class="uk-form-row">
+                    <label for="form-status" class="uk-form-label"><?php echo __('Status') ?></label>
+                    <div class="uk-form-controls">
+                        <select id="form-status" class="uk-width-1-1" name="page[status]">
+                            <option value="1"<?php echo $this->escape(( $this->getAttribute($page, 'status') ? ' selected' : '' ) ) ?>><?php echo $this->escape(( $this->getAttribute($statuses, 1, array(), 'array') ) ) ?></option>
+                            <option value="0"<?php echo $this->escape(( !$this->getAttribute($page, 'status') ? ' selected' : '' ) ) ?>><?php echo $this->escape(( $this->getAttribute($statuses, 0, array(), 'array') ) ) ?></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="uk-form-row">
+                    <label for="form-url" class="uk-form-label"><?php echo __('URL') ?></label>
+                    <div class="uk-form-controls">
+                        <input id="form-url" class="uk-width-1-1" type="text" name="page[url]" value="<?php echo $this->escape(( $this->getAttribute($page, 'url') ) ) ?>">
+                    </div>
+                </div>
+                <div class="uk-form-row">
+                    <span class="uk-form-label"><?php echo __('Restrict Access') ?></span>
+                    <input type="hidden" name="page[roles]" value="">
+                    <?php foreach($roles as $role) :?>
+                    <div class="uk-form-controls">
+                        <label><input type="checkbox" name="page[roles][]" value="<?php echo $this->escape(( $this->getAttribute($role, 'id') ) ) ?>"<?php echo $this->escape(( $this->getAttribute($page, 'hasRole', array($role), 'method') ? ' checked' : '' ) ) ?>> <?php echo $this->escape(( $this->getAttribute($role, 'name') ) ) ?></label>
+                    </div>
+                    <?php endforeach ?>
+                </div>
+                <div class="uk-form-row">
+                    <span class="uk-form-label"><?php echo __('Options') ?></span>
+                    <div class="uk-form-controls">
+                        <label><input type="checkbox" name="page[data][title]" value="1"<?php echo $this->escape(( $this->getAttribute($page, 'get', array('title', 1), 'method') ? ' checked' : '' ) ) ?>> <?php echo __('Show Title') ?></label>
+                    </div>
+                    <div class="uk-form-controls">
+                        <label><input type="checkbox" name="page[data][markdown]" value="1"<?php echo $this->escape(( $this->getAttribute($page, 'get', array('markdown', 0), 'method') ? ' checked' : '' ) ) ?>> <?php echo __('Enable Markdown') ?></label>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <?php echo($this->getDirective('token')->call()) ?>
+
+</form>

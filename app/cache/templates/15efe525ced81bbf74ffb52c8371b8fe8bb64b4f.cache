@@ -1,0 +1,3 @@
+<?php /* C:\xampp\htdocs\cms\themes/onover/views/renderer/position.blank.razr */ extract(array (  'value' => NULL,  'widget' => NULL,  'options' => NULL,), EXTR_SKIP) ?><?php foreach($value as $widget) :?>
+<?php echo($this->getAttribute($widget, 'render', array($options), 'method')) ?>
+<?php endforeach ?>

@@ -1,0 +1,25 @@
+<?php /* C:\xampp\htdocs\cms\extensions/system/views/widgets/text/edit.razr */ extract(array (  'widget' => NULL,), EXTR_SKIP) ?><div class="uk-form-row">
+    <div class="uk-form-controls">
+        <?php echo($this->getDirective('editor')->call(array('widget[settings][content]', $this->getAttribute($widget, 'get', array('content'), 'method'), ['id' => 'form-content', 'data-markdown' => $this->getAttribute($widget, 'get', array('markdown', 0), 'method')]))) ?>
+        <p class="uk-form-controls-condensed">
+            <label><input type="checkbox" name="widget[settings][markdown]" value="1"<?php echo $this->escape(($this->getAttribute($widget, 'get', array('markdown', 0), 'method') ? ' checked' : '') ) ?>> <?php echo __('Enable Markdown') ?></label>
+        </p>
+    </div>
+</div>
+
+<script>
+
+    jQuery(function($) {
+
+        var editor = $('#form-content'), tab = editor.closest('li');
+
+        $('input[name="widget[title]"]', tab).removeClass('uk-form-width-large').addClass('uk-form-large uk-width-1-1');
+        $('input[name="widget[settings][markdown]"]', tab).on('change', function() {
+            editor.trigger($(this).prop('checked') ? 'enableMarkdown' : 'disableMarkdown');
+        });
+
+        tab.removeClass('uk-form-horizontal').addClass('uk-form-stacked').find('.uk-form-label').remove();
+
+    });
+
+</script>

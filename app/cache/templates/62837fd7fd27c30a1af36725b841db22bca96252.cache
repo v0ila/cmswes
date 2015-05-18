@@ -1,0 +1,1 @@
+<?php /* C:\xampp\htdocs\cms\extensions/system/views/tmpl/linkpicker.replace.razr */ ?><span>{{type}}{{#unless type}}<?php echo __('Select Link') ?>{{/unless}} <a class="js-linkpicker-trigger" href="#">{{url}} <i class="uk-icon-pencil"></i></a></span>

@@ -1,0 +1,67 @@
+<?php /* C:\xampp\htdocs\cms\extensions/blog/views/admin/post/table.razr */ extract(array (  'posts' => NULL,  'post' => NULL,  'pending' => NULL,  'link' => NULL,  'app' => NULL,), EXTR_SKIP) ?><?php if($posts) :?>
+<table class="uk-table uk-table-hover uk-table-middle">
+    <thead>
+        <tr>
+            <th class="pk-table-width-minimum"><input type="checkbox" class="js-select-all"></th>
+            <th class="pk-table-min-width-200"><?php echo __('Title') ?></th>
+            <th class="pk-table-width-100 uk-text-center"><?php echo __('Status') ?></th>
+            <th class="pk-table-width-100"><?php echo __('Author') ?></th>
+            <th class="pk-table-width-100 uk-text-center"><?php echo __('Comments') ?></th>
+            <th class="pk-table-width-100"><?php echo __('Date') ?></th>
+            <th class="pk-table-width-200 pk-table-min-width-200"><?php echo __('URL') ?></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($posts as $post) :?>
+        <tr>
+            <td>
+                <input type="checkbox" name="ids[]" class="js-select" value="<?php echo $this->escape(( $this->getAttribute($post, 'id') ) ) ?>">
+            </td>
+            <td>
+                <a href="<?php echo($this->getDirective('url')->call(array('@blog/post/edit', ['id' => $this->getAttribute($post, 'id')]))) ?>"><?php echo $this->escape(( $this->getAttribute($post, 'title') ) ) ?></a>
+            </td>
+            <td class="uk-text-center">
+                <?php if($this->getAttribute($post, 'status') == $this->callFunction('constant', array('STATUS_DRAFT', $post))) :?>
+                <a href="#" data-action="<?php echo($this->getDirective('url')->call(array('@blog/post/status', ['ids[]' => $this->getAttribute($post, 'id'), 'status' => $this->callFunction('constant', array('STATUS_PUBLISHED', $post))]))) ?>" title="<?php echo $this->escape(($this->getAttribute($post, 'statusText')) ) ?>">
+                    <i class="uk-icon-circle uk-text-muted"></i>
+                </a>
+                <?php elseif($this->getAttribute($post, 'status') == $this->callFunction('constant', array('STATUS_PENDING_REVIEW', $post))) :?>
+                <a href="#" data-action="<?php echo($this->getDirective('url')->call(array('@blog/post/status', ['ids[]' => $this->getAttribute($post, 'id'), 'status' => $this->callFunction('constant', array('STATUS_PUBLISHED', $post))]))) ?>" title="<?php echo $this->escape(($this->getAttribute($post, 'statusText')) ) ?>">
+                    <i class="uk-icon-circle uk-text-warning"></i>
+                </a>
+                <?php elseif($this->getAttribute($post, 'status') == $this->callFunction('constant', array('STATUS_PUBLISHED', $post))) :?>
+                <a href="#" data-action="<?php echo($this->getDirective('url')->call(array('@blog/post/status', ['ids[]' => $this->getAttribute($post, 'id'), 'status' => $this->callFunction('constant', array('STATUS_UNPUBLISHED', $post))]))) ?>" title="<?php echo $this->escape(($this->getAttribute($post, 'statusText')) ) ?>">
+                    <?php if($this->getAttribute($post, 'date') > new \DateTime) :?>
+                    <i class="uk-icon-clock-o uk-text-success"></i>
+                    <?php else :?>
+                    <i class="uk-icon-circle uk-text-success"></i>
+                    <?php endif ?>
+                </a>
+                <?php elseif($this->getAttribute($post, 'status') == $this->callFunction('constant', array('STATUS_UNPUBLISHED', $post))) :?>
+                <a href="#" data-action="<?php echo($this->getDirective('url')->call(array('@blog/post/status', ['ids[]' => $this->getAttribute($post, 'id'), 'status' => $this->callFunction('constant', array('STATUS_PUBLISHED', $post))]))) ?>" title="<?php echo $this->escape(($this->getAttribute($post, 'statusText')) ) ?>">
+                    <i class="uk-icon-circle uk-text-danger"></i>
+                </a>
+                <?php endif ?>
+            </td>
+            <td>
+                <a href="<?php echo($this->getDirective('url')->call(array('@system/user/edit', ['id' => $this->getAttribute($this->getAttribute($post, 'user'), 'id')]))) ?>"><?php echo $this->escape(( $this->getAttribute($this->getAttribute($post, 'user'), 'username') ) ) ?></a>
+            </td>
+            <td class="uk-text-center">
+                <a class="uk-badge uk-badge-notification<?php echo $this->escape(( $this->getAttribute($pending, $this->getAttribute($post, 'id'), array(), 'array') ? '' : ' pk-badge' ) ) ?>" href="<?php echo($this->getDirective('url')->call(array('@blog/comment', ['post' => $this->getAttribute($post, 'id')]))) ?>" title="<?php echo _c("{0} No pending|{1} One pending|]1,Inf[ %comments% pending", $this->getAttribute($pending, $this->getAttribute($post, 'id'), array(), 'array'), ["%comments%" => $this->getAttribute($pending, $this->getAttribute($post, 'id'), array(), 'array')]) ?>"><?php echo $this->escape(( $this->getAttribute($post, 'commentCount') ) ) ?></a>
+            </td>
+            <td>
+                <?php echo($this->getDirective('date')->call(array($this->getAttribute($post, 'date'), 'long'))) ?>
+            </td>
+            <td class="pk-table-text-break">
+                <?php ( $link = $this->callFunction('url', array('@blog/id', ['id' => $this->getAttribute($post, 'id')], 'base')) ) ?>
+                <?php if($this->getAttribute($post, 'status') == 2 && $this->getAttribute($post, 'hasAccess', array($this->getAttribute($app, 'user')), 'method')) :?>
+                <a href="<?php echo($this->getDirective('url')->call(array('@blog/id', ['id' => $this->getAttribute($post, 'id')]))) ?>" target="_blank"><?php echo $this->escape(( urldecode($link) ) ) ?></a>
+                <?php else :?>
+                <?php echo $this->escape(( urldecode($link) ) ) ?>
+                <?php endif ?>
+            </td>
+        </tr>
+        <?php endforeach ?>
+    </tbody>
+</table>
+<?php endif ?>

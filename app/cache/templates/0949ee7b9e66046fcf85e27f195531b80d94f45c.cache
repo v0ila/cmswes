@@ -1,0 +1,41 @@
+<?php /* C:\xampp\htdocs\cms\extensions/blog/views/post/index.razr */ extract(array (  'posts' => NULL,  'post' => NULL,  'page' => NULL,  'total' => NULL,), EXTR_SKIP) ?><?php foreach($posts as $post) :?>
+<article class="uk-article">
+
+    <h1 class="uk-article-title"><a href="<?php echo($this->getDirective('url')->call(array('@blog/id', ['id' => $this->getAttribute($post, 'id')]))) ?>"><?php echo $this->escape(($this->getAttribute($post, 'title')) ) ?></a></h1>
+
+    <p class="uk-article-meta">
+        <?php echo __('Written by %name% on %date%', ['%name%' => $this->getAttribute($this->getAttribute($post, 'user'), 'name'), '%date%' => '<time datetime="'.$this->callFunction('date', array($this->getAttribute($post, 'date'), 'Y-m-d H:i:s')).'">'.$this->callFunction('date', array($this->getAttribute($post, 'date'))).'</time>' ]) ?>
+    </p>
+
+    <?php if($this->getAttribute($post, 'excerpt')) :?>
+    <div><?php echo($this->getAttribute($post, 'excerpt')) ?></div>
+    <?php else :?>
+    <div><?php echo($this->getAttribute($post, 'content')) ?></div>
+    <?php endif ?>
+
+    <ul class="uk-subnav uk-subnav-line">
+        <?php if($this->getAttribute($post, 'readmore') || $this->getAttribute($post, 'excerpt')) :?>
+        <li><a href="<?php echo($this->getDirective('url')->call(array('@blog/id', ['id' => $this->getAttribute($post, 'id')]))) ?>"><?php echo __('Continue Reading') ?></a></li>
+        <?php endif ?>
+        <?php if($this->getAttribute($post, 'isCommentable') || $this->getAttribute($post, 'commentCount')) :?>
+        <li><a href="<?php echo($this->getDirective('url')->call(array('@blog/id#comments', ['id' => $this->getAttribute($post, 'id')]))) ?>"><?php echo _c('{0} No comments|{1} %num% Comment|]1,Inf[ %num% Comments', $this->getAttribute($post, 'commentCount'), ['%num%' => $this->getAttribute($post, 'commentCount')]) ?></a></li>
+        <?php endif ?>
+    </ul>
+
+</article>
+<?php endforeach ?>
+
+<p>
+    <ul class="uk-pagination">
+        <?php if($page > 1) :?>
+        <li class="uk-pagination-previous">
+            <a href="<?php echo($this->getDirective('url')->call(array('@blog/page', ['page' => $page-1]))) ?>"><?php echo __('Newer posts') ?></a>
+        </li>
+        <?php endif ?>
+        <?php if($page < $total) :?>
+        <li class="uk-pagination-next">
+            <a href="<?php echo($this->getDirective('url')->call(array('@blog/page', ['page' => $page+1]))) ?>"><?php echo __('Older posts') ?></a>
+        </li>
+        <?php endif ?>
+    </ul>
+</p>

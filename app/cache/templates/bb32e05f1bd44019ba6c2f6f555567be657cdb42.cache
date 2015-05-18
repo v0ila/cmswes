@@ -1,0 +1,27 @@
+<?php /* C:\xampp\htdocs\cms\extensions/page/views/admin/link/page.razr */ extract(array (  'params' => NULL,  'pages' => NULL,  'page' => NULL,), EXTR_SKIP) ?><div class="uk-form-row">
+    <label for="form2-page" class="uk-form-label"><?php echo __('Page') ?></label>
+    <div class="uk-form-controls">
+        <select id="form2-page" class="uk-width-1-1" name="">
+            <option value=""<?php echo $this->escape(( !in_array($this->getAttribute($params, 'id'), array_keys($pages)) ? ' selected' : '' ) ) ?>><?php echo __('- Select Page -') ?></option>
+            <?php foreach($pages as $page) :?>
+            <option value="@page/id?id=<?php echo $this->escape(( $this->getAttribute($page, 'id') ) ) ?>"<?php echo $this->escape(( $this->getAttribute($params, 'id') == $this->getAttribute($page, 'id') ? ' selected' : '' ) ) ?>><?php echo $this->escape(( $this->getAttribute($page, 'title') ) ) ?></option>
+            <?php endforeach ?>
+        </select>
+    </div>
+</div>
+
+<script>
+
+    require(['jquery'], function($) {
+
+        $('.js-linkpicker #form2-page').on('change', function() {
+            var value = $(this).val();
+
+            if (value) {
+                $('.js-linkpicker #form2-url').val($(this).val());
+            }
+        });
+
+    });
+
+</script>

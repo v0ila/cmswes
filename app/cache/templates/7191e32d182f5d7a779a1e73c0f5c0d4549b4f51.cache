@@ -1,0 +1,48 @@
+<?php /* C:\xampp\htdocs\cms\extensions/system/views/admin/extensions/table.razr */ extract(array (  'packages' => NULL,  'name' => NULL,  'package' => NULL,  'extension' => NULL,  'app' => NULL,), EXTR_SKIP) ?><table class="uk-table uk-table-hover uk-table-middle">
+    <thead>
+        <tr>
+            <th colspan="2"><?php echo __('Name') ?></th>
+            <th class="pk-table-width-100"><?php echo __('Version') ?></th>
+            <th class="pk-table-width-minimum uk-text-center"><?php echo __('Status') ?></th>
+            <th class="pk-table-width-minimum"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($packages as $name => $package) :?>
+        <?php ($extension = $this->getAttribute($this->getAttribute($app, 'extensions'), 'get', array($name), 'method')) ?>
+        <tr class="<?php if(!$extension) :?>uk-visible-hover-inline pk-table-disable<?php endif ?>">
+            <td class="pk-table-width-minimum">
+                <img class="uk-img-preserve" src="<?php echo $this->escape(($this->getAttribute($this->getAttribute($package, 'extra'), 'image') ? $this->callFunction('url', array($this->getAttribute($this->getAttribute($package, 'repository'), 'path') . '/' . $this->getAttribute($package, 'name') . '/' . $this->getAttribute($this->getAttribute($package, 'extra'), 'image'))) : $this->callFunction('url', array('extension://system/assets/images/placeholder-icon.svg'))) ) ?>" width="50" height="50" alt="<?php echo $this->escape(( $this->getAttribute($package, 'title') ) ) ?>">
+            </td>
+            <td class="uk-text-nowrap">
+                <h2 class="uk-h3 uk-margin-remove"><?php echo $this->escape(( $this->getAttribute($package, 'title') ) ) ?></h2>
+                <ul class="uk-subnav uk-subnav-line uk-margin-remove">
+                    <li><a href=""><?php echo __('Details') ?></a></li>
+                    <?php if($extension) :?>
+                    <?php if($this->getAttribute($extension, 'config', array('settings'), 'method')) :?>
+                    <li><a href="<?php echo($this->getDirective('url')->call(array('@system/extensions/settings', ['name' => $this->getAttribute($extension, 'name')]))) ?>"><?php echo __('Settings') ?></a></li>
+                    <?php endif ?>
+                    <li><a href="<?php echo($this->getDirective('url')->call(array('@system/permission'))) ?>#ext-<?php echo $this->escape(( $this->getAttribute($extension, 'name') ) ) ?>"><?php echo __('Permissions') ?></a></li>
+                    <?php endif ?>
+                </ul>
+            </td>
+            <td>
+                <ul class="uk-list uk-margin-remove">
+                    <li class="uk-text-truncate"><?php echo $this->escape(( $this->getAttribute($package, 'version') ) ) ?></li>
+                    <li class="uk-text-truncate">/<?php echo $this->escape(( $this->getAttribute($package, 'name') ) ) ?></li>
+                </ul>
+            </td>
+            <td class="uk-text-center">
+                <?php if($extension) :?>
+                <a href="#" class="uk-button uk-button-success" data-action="<?php echo($this->getDirective('url')->call(array('@system/extensions/disable', ['name' => $name]))) ?>"><?php echo __('Enabled') ?></a>
+                <?php else :?>
+                <a href="#" class="uk-button" data-action="<?php echo($this->getDirective('url')->call(array('@system/extensions/enable', ['name' => $name]))) ?>"><?php echo __('Disabled') ?></a>
+                <?php endif ?>
+            </td>
+            <td>
+                <a href="#" class="uk-button pk-button-danger uk-invisible" data-action="<?php echo($this->getDirective('url')->call(array('@system/extensions/uninstall', ['name' => $name]))) ?>"><?php echo __('Delete') ?></a>
+            </td>
+        </tr>
+        <?php endforeach ?>
+    </tbody>
+</table>

@@ -1,0 +1,2 @@
+<?php /* C:\xampp\htdocs\cms\extensions/system/views/widgets/login/logout.razr */ extract(array (  'user' => NULL,  'redirect' => NULL,), EXTR_SKIP) ?><?php echo __('Hi') ?> <?php echo $this->escape(( $this->getAttribute($user, 'username') ) ) ?><br>
+<a href="<?php echo($this->getDirective('url')->call(array('@system/auth/logout', ['redirect' => $redirect]))) ?>"><?php echo __('Logout') ?></a>

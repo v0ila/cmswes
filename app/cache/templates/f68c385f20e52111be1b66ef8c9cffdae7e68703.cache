@@ -1,0 +1,18 @@
+<?php /* C:\xampp\htdocs\cms\extensions/system/views/admin/link/link.types.razr */ extract(array (  'links' => NULL,  'link' => NULL,), EXTR_SKIP) ?><div class="uk-form-row">
+    <label for="form2-url" class="uk-form-label"><?php echo __('URL') ?></label>
+    <div class="uk-form-controls">
+        <input id="form2-url" type="text" class="js-url uk-width-1-1">
+    </div>
+</div>
+<div class="uk-form-row">
+    <label for="form2-type" class="uk-form-label"><?php echo __('Type') ?></label>
+    <div class="uk-form-controls">
+        <select id="form2-type" class="js-types uk-width-1-1" name="type">
+            <option value=""><?php echo __('- Select Type -') ?></option>
+            <?php foreach($links as $link) :?>
+            <option value="<?php echo $this->escape(( $this->getAttribute($link, 'id') ) ) ?>"><?php echo $this->escape(( $this->getAttribute($link, 'label') ) ) ?></option>
+            <?php endforeach ?>
+        </select>
+    </div>
+</div>
+<div class="js-edit uk-form-row uk-hidden"></div>

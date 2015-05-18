@@ -1,0 +1,37 @@
+<?php /* C:\xampp\htdocs\cms\extensions/page/views/admin/pages/table.razr */ extract(array (  'pages' => NULL,  'page' => NULL,  'link' => NULL,  'app' => NULL,), EXTR_SKIP) ?><?php if($pages) :?>
+<table class="uk-table uk-table-hover uk-table-middle">
+    <thead>
+        <tr>
+            <th class="pk-table-width-minimum"><input type="checkbox" class="js-select-all"></th>
+            <th class="pk-table-min-width-100"><?php echo __('Title') ?></th>
+            <th class="pk-table-width-100 uk-text-center"><?php echo __('Status') ?></th>
+            <th class="pk-table-width-200 pk-table-min-width-200"><?php echo __('URL') ?></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($pages as $page) :?>
+        <tr>
+            <td>
+                <input type="checkbox" name="ids[]" class="js-select" value="<?php echo $this->escape(( $this->getAttribute($page, 'id') ) ) ?>">
+            </td>
+            <td>
+                <a href="<?php echo($this->getDirective('url')->call(array('@page/page/edit', ['id' => $this->getAttribute($page, 'id')]))) ?>"><?php echo $this->escape(( $this->getAttribute($page, 'title') ) ) ?></a>
+            </td>
+            <td class="uk-text-center">
+                <a href="#" data-action="<?php echo($this->getDirective('url')->call(array('@page/page/status', ['ids[]' => $this->getAttribute($page, 'id'), 'status' => $this->getAttribute($page, 'status') ? '0' : '1']))) ?>" title="<?php echo $this->escape(( $this->getAttribute($page, 'statusText') ) ) ?>">
+                    <i class="uk-icon-circle uk-text-<?php echo $this->escape(( $this->getAttribute($page, 'status') ? 'success' : 'danger') ) ?>" title="<?php echo $this->escape(( $this->getAttribute($page, 'statusText') ) ) ?>"></i>
+                </a>
+            </td>
+            <td class="pk-table-text-break">
+                <?php ($link = $this->callFunction('url', array('@page/id', ['id' => $this->getAttribute($page, 'id')], 'base'))) ?>
+                <?php if($this->getAttribute($page, 'status') == 1 && $this->getAttribute($page, 'hasAccess', array($this->getAttribute($app, 'user')), 'method')) :?>
+                <a href="<?php echo($this->getDirective('url')->call(array('@page/id', ['id' => $this->getAttribute($page, 'id')]))) ?>" target="_blank"><?php echo $this->escape(( urldecode($link) ) ) ?></a>
+                <?php else :?>
+                <?php echo $this->escape(( urldecode($link) ) ) ?>
+                <?php endif ?>
+            </td>
+        </tr>
+        <?php endforeach ?>
+    </tbody>
+</table>
+<?php endif ?>
