@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "name": "Package",
+    "name": "cmswes",
     "type": "object",
     "additionalProperties": false,
     "required": [ "name", "description" ],
